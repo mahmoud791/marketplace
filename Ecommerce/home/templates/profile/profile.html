@@ -1,0 +1,199 @@
+
+{% extends 'home/template.html' %}
+{% load static %}
+
+{%block content%}
+<br><br><br>
+<div class="container">
+    <div class="main-body">
+    
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="main-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+              <li class="breadcrumb-item"><a href="javascript:void(0)">User</a></li>
+              <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+            </ol>
+          </nav>
+          <!-- /Breadcrumb -->
+    
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                    <div class="mt-3">
+                      <h4>{{ request.user.username }}</h4>
+                      <p class="text-secondary mb-1">                        
+                        
+                        
+                      </p>
+                      
+                    </div>
+                  </div>
+                  
+                  <div class="d-flex flex-column align-items-center text-center"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Add Product</button></div>
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">New Product</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form method="POST" action="addproduct/" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                              <label for="recipient-name" class="col-form-label">Proudct:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Price:</label>
+                                <input type="number" class="form-control" id="recipient-name" name="price">
+                              </div>
+                
+                              <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Amount:</label>
+                                <input type="number" class="form-control" id="recipient-name" name="amount">
+                              </div>
+                
+                
+                              <div class="container">
+                                <div class="row mt-2">
+                                    <div class="form-group">
+                              <label for="recipient-name" class="col-form-label">Category:</label>
+                                <select class="custom-select" style="width: auto" name="category">
+                                    <option selected>Open this select menu</option>
+                
+                                    <option value="clothes">clothes</option>
+                                    <option value="shoes">shoes</option>
+                                    <option value="watches">watches</option>
+                                    <option value="laptops">laptops</option>
+                                    <option value="mobile phones">mobile phones</option>
+                                    <option value="headphones/headsets">headphones/headsets</option>
+                                    <option value="perfumes/deodrants">perfumes/deodrants</option>
+                                    <option value="accessories">accessories</option>
+                                    <option value="kid toys">kid toys</option>
+                <option value="HouseHold">HouseHold</option>
+                                  </select>
+                            </div>
+                          </div>
+                        </div>
+                              
+                              
+                            <div class="form-group">
+                              <label for="message-text" class="col-form-label">Description:</label>
+                              <input type="text" class="form-control" id="recipient-name" name="description">
+                            </div>
+                
+                            <div class="form-group">
+                              <label for="exampleFormControlFile1">Proudct image:
+                              </label>
+                              <input type="file" accept="image/*" name="image">
+                            </div>
+                
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <input class="btn btn-primary" type="submit" value="Submit">
+                            </div>
+                          </form>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Name</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ request.user.username }}
+                        
+                    </div>
+
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">credits</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {{ credits }}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    
+                    <div class="col-sm-9 text-secondary">
+                        
+                    </div>
+                  </div>
+                  
+                  
+                </div>
+              </div>
+              
+              <h1>Your products</h1>
+              
+              
+              <div class="row">
+                {% for item in items %}       
+                <div class="col-lg-4 col-md-6 mb-4">
+                  <div class="card h-100">
+                    <a href="{% url 'product_detail' item.slug %}"><img class="card-img-top" src="{% static 'images/'%}{{item.image}} " alt=""></a>
+                    
+                    <div class="card-body">
+                      <h4 class="card-title">
+                        <a href="{% url 'product_detail' item.slug %}">{{item.name}}</a>
+                      </h4>
+                      <h5>{{item.price}} EGP</h5>
+                      <p class="card-text">{{item.description}}</p>
+                    </div>
+                    <div class="card-footer">
+                      <small class="text-muted">
+      
+                        {%if item.get_rating >= 1 and  item.get_rating < 2 %}
+                        <small class="text-muted">&#9733; &#9734; &#9734; &#9734; &#9734;</small>
+                        {%elif item.get_rating >= 2 and  item.get_rating < 3 %}
+                        <small class="text-muted">&#9733; &#9733; &#9734; &#9734; &#9734;</small>
+                        {%elif item.get_rating >= 3 and  item.get_rating < 4 %}
+                        <small class="text-muted">&#9733; &#9733; &#9733; &#9734; &#9734;</small>
+                        {%elif item.get_rating >= 4 and  item.get_rating < 5 %}
+                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        {%elif item.get_rating == 5 %}
+                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9733;</small>
+                        {% else %}
+                        <small class="text-muted">&#9734; &#9734; &#9734; &#9734; &#9734;</small>
+                        {% endif %}
+      
+      
+                      </small>
+                      <br>
+                      <div class="float-right">
+                        <strong>{{item.amount}} items available</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {%endfor%}
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{%endblock content%}

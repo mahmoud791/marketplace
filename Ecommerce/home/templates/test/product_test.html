@@ -1,0 +1,160 @@
+{% extends 'home/template.html' %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <!-- Page Content -->
+  <br>
+  <br>
+  <br>
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">All categories</h1>
+        <div class="list-group">
+          <a href="{% url 'clothes'%}" class="list-group-item">Clothes</a>
+          <a href="{% url 'shoes'%}" class="list-group-item">Shoes</a>
+          <a href="{% url 'watches'%}" class="list-group-item">Watches</a>
+          <a href="{% url 'laptops'%}" class="list-group-item">Laptops</a>
+          <a href="{% url 'mobile_phones'%}" class="list-group-item">Mobile phones</a>
+          <a href="{% url 'headphones&headsets'%}" class="list-group-item">Headphones/Headsets</a>
+          <a href="{% url 'perfumes&deodrants'%}" class="list-group-item">Perfumes/Deodrants</a>
+          <a href="{% url 'accessories'%}" class="list-group-item">Accessories</a>
+          <a href="{% url 'kid_toys'%}" class="list-group-item">Kid toys</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+
+       
+        <br><br>
+        <h1 class="title" >{{product.name}}</h1>
+        <img src="{% static 'images/'%}{{product.image}}" >
+        
+        <h1 class="title" >{{product.price}}EGP</h1>
+        <h1 class="title">
+
+
+                        {%if product.get_rating >= 1 and  product.get_rating < 2 %}
+                        <small class="text-muted">&#9733; &#9734; &#9734; &#9734; &#9734;</small>
+                        {%elif product.get_rating >= 2 and  product.get_rating < 3 %}
+                        <small class="text-muted">&#9733; &#9733; &#9734; &#9734; &#9734;</small>
+                        {%elif product.get_rating >= 3 and  product.get_rating < 4 %}
+                        <small class="text-muted">&#9733; &#9733; &#9733; &#9734; &#9734;</small>
+                        {%elif product.get_rating >= 4 and  product.get_rating < 5 %}
+                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        {%elif product.get_rating == 5 %}
+                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9733;</small>
+                        {% else %}
+                        <small class="text-muted">&#9734; &#9734; &#9734; &#9734; &#9734;</small>
+                        {% endif %}
+
+                  
+
+
+        </h1>
+        {%if not request.user.is_staff and request.user.is_authenticated%}
+        <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+        {%endif%}
+        <hr>
+        <hr>
+        <h2 class="subtitle">Reviews:</h2>
+        <div class="reviews-wrapper">
+        
+            {% for review in product.reviews.all %}
+            <hr>
+                <div class="notification space-below" style="background-color: white;">
+                    <p> <strong>username: </strong>{{ review.user }}
+                        <br>
+                        {%if review.stars >= 1 and  review.stars < 2 %}
+                        <small class="text-muted">&#9733; &#9734; &#9734; &#9734; &#9734;</small>
+                        {%elif review.stars >= 2 and  review.stars < 3 %}
+                        <small class="text-muted">&#9733; &#9733; &#9734; &#9734; &#9734;</small>
+                        {%elif review.stars >= 3 and  review.stars < 4 %}
+                        <small class="text-muted">&#9733; &#9733; &#9733; &#9734; &#9734;</small>
+                        {%elif review.stars >= 4 and  review.stars < 5 %}
+                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                        {%elif review.stars == 5 %}
+                        <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9733;</small>
+                        {% else %}
+                        <small class="text-muted">&#9734; &#9734; &#9734; &#9734; &#9734;</small>
+                        {% endif %}
+                    </p>
+
+                    {{ review.content }}
+                </div>
+            <hr>
+            {% empty %}
+                <div class="notification space-below">
+                    No reviews yet...
+                </div>
+            {% endfor %}
+        </div>
+
+
+        
+        
+          
+          
+
+       
+        <br>
+        <div class="notification space-below">
+            {% if request.user.is_authenticated and not request.user.is_staff %}
+            <h1 class="title">Add Review</h1>
+                <form method="post" action=".">
+                    {% csrf_token %}
+
+                    <div class="field">
+                        <label>Stars</label>
+
+                        <div clas="control">
+                            <div class="select">
+                                <select name="stars">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label>Content</label>
+
+                        <div class="control">
+                            <textarea class="textarea" name="content"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <button class="w3-btn w3-round-xlarge w3-blue w3-hover-green">submit review</button>
+                        </div>
+                    </div>
+                </form>
+            {% else %}
+                <p>only customers can add review!</p>
+            {% endif %}
+        </div>
+        <br>
+        
+        <!-- /.row -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+{%endblock content%}

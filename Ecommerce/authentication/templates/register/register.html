@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Register</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+<link rel="icon" type="image/png" href={% static "auth/images/icons/favicon.ico" %}/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href={% static "auth/fonts/font-awesome-4.7.0/css/font-awesome.min.css" %}>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href={% static "auth/fonts/iconic/css/material-design-iconic-font.min.css" %}>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href={% static 'auth/css/main.css' %}>
+	<link rel="stylesheet" type="text/css" href={% static 'auth/css/uril.css' %}>
+<!--===============================================================================================-->
+</head>
+<body>
+	<form action="" method = "POST">
+		{% csrf_token %}
+
+		<div class="limiter">
+		<div class="container-login100" style="background-image: url('images/bg-01.jpg');">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form">
+					<span class="login100-form-logo">
+						<i class="zmdi zmdi-landscape"></i>
+					</span>
+
+					<span class="login100-form-title p-b-34 p-t-27">
+						Register
+					</span>
+
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						{{ form.username }}
+						<!-- <input class="input100" type="text" name="username" placeholder="Username"> -->
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input" data-validate = "Email">
+						{{ form.email }}
+						<!-- <input class="input100" type="text" name="Email" placeholder="Email"> -->
+						<span class="focus-input100" data-placeholder="&#xf207;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<!-- {{ form.password1 }} -->
+						<input class="input100" type="password" name="password1" placeholder="Password">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+                    </div>
+                    
+                    <div class="wrap-input100 validate-input" data-validate="confirm password">
+						<!-- {{ form.password2 }} -->
+						<input class="input100" type="password" name="password2" placeholder=" Confirm Password">
+						<span class="focus-input100" data-placeholder="&#xf191;"></span>
+                    </div>
+					
+					
+
+					<div class="container-login100-form-btn">
+						<!-- <button class="">
+							Sign Up
+						</button> -->
+						<input type="submit" class="login100-form-btn" name="createUser" style="background-color: rgb(239, 222, 243); color:rgb(239, 222, 243);">
+					</div>
+                    <br>
+					<div class="text-center p-t-90">
+						<a class="txt1" href="{% url 'login' %}">
+							Already a member? Sign in here.
+						</a>
+					</div>
+					{{ form.errors}}
+				</form>
+			</div>
+		</div>
+	</div>
+
+	
+	</form>
+
+	
+
+
+
+</body>
+</html>

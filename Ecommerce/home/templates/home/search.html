@@ -1,0 +1,27 @@
+{% extends 'home/template.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Search Results for "{{request.GET.q}}"</h3>
+            <hr>
+            {% for product in products %}
+            <hr>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="{{product.image.url}}" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-8">
+                    <h4><a href="{% url 'product_detail' product.slug %}">{{product.name}}</a></h4>
+                    <p>{{product.description}}</p>
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

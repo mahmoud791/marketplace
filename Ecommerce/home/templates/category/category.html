@@ -1,0 +1,92 @@
+{% extends 'home/template.html' %}
+{% load static %}
+{%block content%}
+    
+
+  <!-- Page Content -->
+  <br>
+  <br>
+  <br>
+  <div class="container">
+
+    <div class="row">
+
+      <div class="col-lg-3">
+
+        <h1 class="my-4">All categories</h1>
+        <div class="list-group">
+          <a href="{% url 'clothes'%}" class="list-group-item">Clothes</a>
+          <a href="{% url 'shoes'%}" class="list-group-item">Shoes</a>
+          <a href="{% url 'watches'%}" class="list-group-item">Watches</a>
+          <a href="{% url 'laptops'%}" class="list-group-item">Laptops</a>
+          <a href="{% url 'mobile_phones'%}" class="list-group-item">Mobile phones</a>
+          <a href="{% url 'headphones&headsets'%}" class="list-group-item">Headphones/Headsets</a>
+          <a href="{% url 'perfumes&deodrants'%}" class="list-group-item">Perfumes/Deodrants</a>
+          <a href="{% url 'accessories'%}" class="list-group-item">Accessories</a>
+          <a href="{% url 'kid_toys'%}" class="list-group-item">Kid toys</a>
+            <a href="{% url 'household'%}" class="list-group-item">HouseHold</a>
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+
+       
+        <br><br>
+        <div class="row">
+          {% for item in items %}       
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="{% url 'product_detail' item.slug %}"><img class="card-img-top" src="{% static 'images/'%}{{item.image}} " alt=""></a>
+              <strong>seller: {{item.seller}}</strong>
+              {%if not request.user.is_staff and request.user.is_authenticated%}
+              <button data-product="{{item.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+              {%endif%}
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="{% url 'product_detail' item.slug %}">{{item.name}}</a>
+                </h4>
+                <h5>{{item.price}} EGP</h5>
+                <p class="card-text">{{item.description}}</p>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">
+                  
+
+                  {%if item.get_rating >= 1 and  item.get_rating < 2 %}
+                  <small class="text-muted">&#9733; &#9734; &#9734; &#9734; &#9734;</small>
+                  {%elif item.get_rating >= 2 and  item.get_rating < 3 %}
+                  <small class="text-muted">&#9733; &#9733; &#9734; &#9734; &#9734;</small>
+                  {%elif item.get_rating >= 3 and  item.get_rating < 4 %}
+                  <small class="text-muted">&#9733; &#9733; &#9733; &#9734; &#9734;</small>
+                  {%elif item.get_rating >= 4 and  item.get_rating < 5 %}
+                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                  {%elif item.get_rating == 5 %}
+                  <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9733;</small>
+                  {% else %}
+                  <small class="text-muted">&#9734; &#9734; &#9734; &#9734; &#9734;</small>
+                  {% endif %}
+
+
+                </small>
+                <a href="{% url 'product_detail' item.slug %}">review</a>
+              </div>
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+        
+        <!-- /.row -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+
+  {%endblock content%}

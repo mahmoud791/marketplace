@@ -1,0 +1,101 @@
+{% extends 'home/template.html' %}
+{% load static %}
+{%block content%}
+ <br><br><br>
+  <!-- Page Content -->
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Add Product</button>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">New Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="addproduct/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Proudct:</label>
+              <input type="text" class="form-control" id="recipient-name" name="name">
+              </div>
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Price:</label>
+                <input type="number" class="form-control" id="recipient-name" name="price">
+              </div>
+
+              <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Amount:</label>
+                <input type="number" class="form-control" id="recipient-name" name="amount">
+              </div>
+
+
+              <div class="container">
+                <div class="row mt-2">
+                    <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Category:</label>
+                  <select class="custom-select" style="width: auto" name="category">
+                    <option selected>Open this select menu</option>
+                    <option value="HouseHold">HouseHold</option>
+                    <option value="clothes">clothes</option>
+                    <option value="shoes">shoes</option>
+                    <option value="watches">watches</option>
+                    <option value="laptops">laptops</option>
+                    <option value="mobile phones">mobile phones</option>
+                    <option value="headphones/headsets">headphones/headsets</option>
+                    <option value="perfumes/deodrants">perfumes/deodrants</option>
+                    <option value="accessories">accessories</option>
+                    <option value="kid toys">kid toys</option>
+
+
+                  </select>
+                </div>
+              </div>
+            </div>
+              
+              
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Description:</label>
+              <input type="text" class="form-control" id="recipient-name" name="description">
+            </div>
+
+            <div class="form-group">
+              <label for="exampleFormControlFile1">Proudct image:
+              </label>
+              <input type="file" accept="image/*" name="image">
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <input class="btn btn-primary" type="submit" value="Submit">
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+      <!-- /.col-lg-3 -->
+
+
+        <!-- /.row -->
+
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+{%endblock content%}
