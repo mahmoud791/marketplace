@@ -69,6 +69,33 @@ def cart(request):
     context = {'items':items,'order':order}
     return render(request, 'home/cart.html', context)
 
+def buyproduct(request):
+    customer=request.user
+    order, created=Order.objects.get_or_create(customer=customer,complete=False)
+    items=order.orderitem_set.all()
+    totalcost = 0
+    for item in items:
+        totalcost = totalcost + int(item.product.price)
+    
+    if request.user.user.credits < totalcost:
+        return redirect("/cart")
+    else:
+        for item in items:
+            item.product.seller.user.credits = item.product.seller.user.credits + int(item.product.price)
+            item.product.seller.user.save()
+            item.product.seller = request.user
+            item.product.save()
+        
+        request.user.user.credits = request.user.user.credits - totalcost
+        request.user.save()
+
+
+
+
+        
+    return redirect("/profile")
+
+
 def checkout(request):
     order=None
     if request.user.is_authenticated:

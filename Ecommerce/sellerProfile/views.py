@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
-from home.models import Product
+from home.models import Product,Order
 # Create your views here.
 
 def sellerProfile (request):
@@ -23,6 +23,12 @@ def addNewProduct (request):
     return redirect("/sellerprofile")
 
 
+def buyproduct(request):
+    customer=request.user
+    order, created=Order.objects.get_or_create(customer=customer,complete=False)
+    items=order.orderitem_set.all()
+    for item in items:
+        print(item.product.price)
 
 def addcredits (request):
     
