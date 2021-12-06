@@ -136,6 +136,22 @@ def addNewProduct (request):
 
     return redirect("/profile")
 
+
+def addcredits (request):
+        
+    
+    credits=request.POST["credits"]
+    
+    request.user.user.credits = request.user.user.credits + int(credits)
+    
+    request.user.save()
+
+    
+    
+
+    return redirect("/profile")
+
+
 def search(request):
     q = request.GET.get('q')
     products = Product.objects.filter(name__icontains=q)

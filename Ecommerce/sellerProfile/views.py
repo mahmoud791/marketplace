@@ -21,3 +21,16 @@ def addNewProduct (request):
     
 
     return redirect("/sellerprofile")
+
+
+
+def addcredits (request):
+    
+    
+    credits=request.POST["credits"]
+    request.user.user.credits += credits
+
+    
+    
+
+    return redirect("/sellerprofile")
