@@ -47,7 +47,7 @@
                           <form method="POST" action="addproduct/" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
-                              <label for="recipient-name" class="col-form-label">Proudct:</label>
+                              <label for="recipient-name" class="col-form-label">Product:</label>
                               <input type="text" class="form-control" id="recipient-name" name="name">
                             </div>
                             <div class="form-group">
@@ -55,10 +55,7 @@
                                 <input type="number" class="form-control" id="recipient-name" name="price">
                               </div>
                 
-                              <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Amount:</label>
-                                <input type="number" class="form-control" id="recipient-name" name="amount">
-                              </div>
+                              
                 
                 
                               <div class="container">
@@ -213,7 +210,7 @@
                       </small>
                       <br>
                       <div class="float-right">
-                        <strong>{{item.amount}} items available</strong>
+                        
                       </div>
                     </div>
                   </div>

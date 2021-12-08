@@ -11,6 +11,9 @@ from home.models import Product
 class user(models.Model):
     user = models.OneToOneField(User,null=True,on_delete=models.CASCADE)
     credits = models.IntegerField(default=0)
+    ssn = models.IntegerField(null=True)
+    address = models.CharField(max_length=200,null=True)
+    tax_no = models.IntegerField(null=True)
     
 
 

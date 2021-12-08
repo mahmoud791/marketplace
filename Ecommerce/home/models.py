@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import pre_save
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.text import slugify
 # Create your models here.
 
@@ -52,11 +54,30 @@ class Product (models.Model):
             return total / self.reviews.count()
         else:
             return 0
-    
+
+class product2 (models.Model):
+    product = models.OneToOneField(Product,null=True,on_delete=models.CASCADE)
+    manufacturer_name = models.CharField(max_length=200,null=True)
+    current_location = models.CharField(max_length=200,null=True)
+    origin_country = models.CharField(max_length=200,null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+
+@receiver(post_save, sender=Product)
+def create_product2(sender, instance, created, **kwargs):
+    if created:
+        product2.objects.create(product=instance)
+
+
+@receiver(post_save, sender=Product)
+def save_product2(sender, instance, **kwargs):
+    instance.product2.save()  
+
+
+
 
 class Order(models.Model):
     customer = models.ForeignKey(User,null=True,on_delete = models.SET_NULL)
-    date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False,null=True,blank=False)
     transaction_id = models.CharField(max_length=200,null=True)
     def __str__(self):
@@ -71,33 +92,51 @@ class Order(models.Model):
     @property
     def get_cart_items(self):
         orderitems=self.orderitem_set.all()
-        total=sum([item.quantity for item in orderitems])
+        total=sum([1 for item in orderitems])
         return total
+
+class order2(models.Model):
+    order = models.OneToOneField(Order,null=True,on_delete=models.CASCADE)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    shipping_company = models.CharField(max_length=200,null=True)
+
+@receiver(post_save, sender=Order)
+def create_order2(sender, instance, created, **kwargs):
+    if created:
+        order2.objects.create(order=instance)
+
+
+@receiver(post_save, sender=Order)
+def save_order2(sender, instance, **kwargs):
+    instance.order2.save()  
+
+
+
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order,null=True,blank=True,on_delete = models.SET_NULL)
     product = models.ForeignKey(Product,null=True,blank=True,on_delete = models.SET_NULL)
-    quantity = models.IntegerField(default=0,null=True,blank=True)
+    quantity = models.IntegerField(default=1)
     date_added = models.DateTimeField(auto_now_add=True)
     @property
     def get_total(self):
         total=self.product.price * self.quantity
         return total
 
+class orderitem2(models.Model):
+    orderitem = models.OneToOneField(OrderItem,null=True,on_delete=models.CASCADE)
+    batch_no = models.IntegerField(null=True)
+    expiration_date = models.DateField(auto_now_add=True)
 
-class ShippingAddress(models.Model):
-    customer = models.ForeignKey(User,null=True,on_delete = models.SET_NULL)
-    order = models.ForeignKey(Order,null=True,blank=True,on_delete = models.SET_NULL)
-    address = models.CharField(max_length=200,null=True)
-    city = models.CharField(max_length=200,null=True)
-    state = models.CharField(max_length=200,null=True)
-    zipcode = models.CharField(max_length=200,null=True)
-    date_added = models.DateTimeField(auto_now_add=True)
-    
-    def __str__(self):
-        return self.address
+@receiver(post_save, sender=OrderItem)
+def create_orderitem2(sender, instance, created, **kwargs):
+    if created:
+        orderitem2.objects.create(orderitem=instance)
 
 
+@receiver(post_save, sender=OrderItem)
+def save_orderitem2(sender, instance, **kwargs):
+    instance.orderitem2.save()  
 
 
 class ProductReview(models.Model):

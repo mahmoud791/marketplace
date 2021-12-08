@@ -1,6 +1,6 @@
 from django.test import TestCase,Client
 from django.urls import reverse
-from home.models import Product,Order,OrderItem,ProductReview,ShippingAddress,User
+from home.models import Product,Order,OrderItem,ProductReview,User
 import json
 
 class TestViews(TestCase):
@@ -21,7 +21,7 @@ class TestViews(TestCase):
             description='testproduct',
             price=120,
             category ='shoes',
-            amount = 1
+            
             
         )
 

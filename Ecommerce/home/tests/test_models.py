@@ -1,5 +1,5 @@
 from django.test import TestCase
-from home.models import Product,User,ProductReview
+from home.models import *
 
 class TestModels(TestCase):
 
@@ -13,8 +13,7 @@ class TestModels(TestCase):
             name='product 1',
             description='test_product',
             price=120,
-            category='shoes',
-            amount=1
+            category='shoes', 
         )
 
         self.user1 = User.objects.create(
@@ -42,7 +41,7 @@ class TestModels(TestCase):
             description='test_product',
             price=120,
             category='shoes',
-            amount=1
+            
         )
 
         

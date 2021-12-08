@@ -23,7 +23,7 @@
                     <div style="flex:2"><img class="row-image" src="{% static 'images/'%}{{item.product.image}} "></div>
 					<div style="flex:2">{{ item.product.name }}</div>
 					<div style="flex:1">{{ item.product.price|floatformat:2 }}</div>
-
+                    
 					<div style="flex:1">
 						<p style="font-size: larger;" class="quantity">{{item.quantity}}</p>
 						<div class="quantity">
@@ -32,8 +32,9 @@
 							<img data-product={{item.product.id}} data-action="remove" class="chg-quantity update-cart" src="{% static  'images/arrow-down.png' %}">
 						</div>
 					</div>
+					
 					<div style="flex:1"><p>{{item.get_total}}EGP</p></div>
-
+				    
 				</div>
                 {%endfor%}
 
