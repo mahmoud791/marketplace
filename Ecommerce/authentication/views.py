@@ -2,9 +2,14 @@ from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from authentication.models import user
 from django.contrib.auth import authenticate, login, logout
+
+from home import serializer
 from .forms import NewUser
 from django.contrib import messages
-
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from authentication.serializer import *
+from django.contrib.auth.models import User
 
 
 
@@ -53,4 +58,12 @@ def test_user_creation (request):
     context = {'form' : form }
     return render(request,'testing/createuser.html',context)
 
+
+@api_view()
+def User_list(request):
+    users=request.user
+    serializer1 = Userserializer(users)
+    serializer2 = userserializer(users)
+    serializer = [serializer1.data , serializer2.data]
+    return  Response(serializer)
 

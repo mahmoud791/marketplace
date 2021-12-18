@@ -1,8 +1,13 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, response
 import json
+
+from home.serializer import *
 from .models import *
 from authentication.models import user
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
 
 items = Product.objects.all()
 
@@ -185,3 +190,9 @@ def search(request):
     context = {'query' : q, 'products' : products}
     tempelate = 'home/search.html'
     return render(request,tempelate,context)
+
+@api_view()
+def product_list(request):
+    products=Product.objects.all()
+    serializer = [productserializer(products, many = True).data , product2serializer(products, many = True).data]
+    return Response(serializer)
